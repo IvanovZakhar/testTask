@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+}
+
+main{
+    padding: 20px;
+}
+
+.checkbox h4{
+    text-align: center;
+}
+
+.checkboxes{
+    width: 300px;
+    display: flex;
+    margin: 0 auto;
+    margin-top: 10px;
+    justify-content: space-between;
+}
+
+
+.course{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+
+
+
