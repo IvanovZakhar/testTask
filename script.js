@@ -89,8 +89,8 @@
                         ${this.name}
                     </td>
                     <td class="salary">от 
-                        ${this.prices[0] == null ? '0' : this.prices[0]}  
-                        ${(this.prices[1] == null) ? '' : 'до ' + this.prices[1]}
+                        ${this.prices[0]}  
+                        ${(this.prices[1] == 0) ? '' : 'до ' + this.prices[1]}
                     </td>
         `;
         
@@ -99,6 +99,24 @@
 
         
     }
+
+    
+
+    for(let i = 0; i < 2; i++){
+        const newArr = courses.findIndex(item => item.prices[0] == null);
+
+        courses[newArr].prices[0] = 0;
+    
+    }
+
+    // for(let i = 0; i < 3; i++){
+    //     const newArr = courses.findIndex(item => item.prices[1] == null);
+
+    //     courses[newArr].prices[1] = '';
+    
+    // }
+
+
 
     // Помещаем содержимое курсов в изменяемую переменную для иммутабельности.
 
@@ -113,7 +131,6 @@
     // Функция которая будет отвечать за появление обновляемой информации согласно фильтру
 
     function showSelected (filter, checkbox) {
-        console.log(filter);
         // Т.к. чекбокс стоит по умолчанию без чека, то сразу при равниваем фильтр при клике.
         currentValue = filter; 
 
@@ -139,7 +156,9 @@
 
     const checkboxRequiredRange1 = document.querySelector('.requiredRange1'),
     checkboxRequiredRange2 = document.querySelector('.requiredRange2'),
-    checkboxRequiredRange3 = document.querySelector('.requiredRange3');
+    checkboxRequiredRange3 = document.querySelector('.requiredRange3'),
+    sortByLeters = document.querySelector('.sortByLeters'),
+    sortBySalary = document.querySelector('.sortBySalary');
 
     // Устанавливаем обработчики событий на каждый из выбранных чекбоксов
 
@@ -147,5 +166,56 @@
     checkboxRequiredRange2.addEventListener('click', () => showSelected (sortRequiredRange2(), checkboxRequiredRange2));
     checkboxRequiredRange3.addEventListener('click', () => showSelected (sortRequiredRange3(), checkboxRequiredRange3));
 
+    sortByLeters.addEventListener('click', () => {
+        const courseItem = document.querySelectorAll('.course__item');
+        courseItem.forEach(item => item.remove());
+        currentValue = courses.sort(function(a, b) {
+            const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+            const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+            if (nameA < nameB) {
+              return -1;
+            }
+            if (nameA > nameB) {
+              return 1;
+            }
+          
+            // names must be equal
+            return 0;
+          });
+          currentValue.forEach(item => {
+            new Courses(item.name, item.prices, '.course .container table').render();
+        });
+    });
+
+    sortBySalary.addEventListener('click', () => {
+        const courseItem = document.querySelectorAll('.course__item');
+        courseItem.forEach(item => item.remove());
+        function compareNumbers(a, b) {
+            return a.prices[1] - b.prices[0];
+          }
+    
+       
+        currentValue = courses.sort(compareNumbers);
+        currentValue.forEach(item => {
+            new Courses(item.name, item.prices, '.course .container table').render();
+        });
+    });
 
 
+
+    // function compareNumbers(a, b) {
+    //     return a.prices[0] + b.prices[0];
+    //   }
+
+
+  
+
+    
+
+   
+    //   const newArr = courses.map.set('null', 0);
+    //   console.log(newArr);
+
+
+
+  
