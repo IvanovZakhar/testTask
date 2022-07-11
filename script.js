@@ -82,7 +82,7 @@
              this.classes.forEach(className => element.classList.add(className));
         }
 
-        // Добавляем Элементы, с помощью инкрементов проверяем на наличие null и заменяем его
+        // Добавляем Элементы, с помощью инкрементов проверяем на наличие 0 и заменяем его на пустую строку
        
         element.innerHTML = `
                     <td class="course-name">
@@ -90,6 +90,7 @@
                     </td>
                     <td class="salary">от 
                         ${this.prices[0]}  
+                        
                         ${(this.prices[1] == 0) ? '' : 'до ' + this.prices[1]}
                     </td>
         `;
@@ -100,8 +101,10 @@
         
     }
 
-    
+    // Изменяем null на другие типы данных для корректного отображения
 
+    
+    // Заменяем null на 0 в нулевом массиве prices 
     for(let i = 0; i < 2; i++){
         const newArr = courses.findIndex(item => item.prices[0] == null);
 
@@ -109,12 +112,13 @@
     
     }
 
-    // for(let i = 0; i < 3; i++){
-    //     const newArr = courses.findIndex(item => item.prices[1] == null);
+    // Заменяем null на пустую строку в первом массиве
+    for(let i = 0; i < 3; i++){
+        const newArr = courses.findIndex(item => item.prices[1] == null);
 
-    //     courses[newArr].prices[1] = '';
+        courses[newArr].prices[1] = '';
     
-    // }
+    }
 
 
 
@@ -166,10 +170,12 @@
     checkboxRequiredRange2.addEventListener('click', () => showSelected (sortRequiredRange2(), checkboxRequiredRange2));
     checkboxRequiredRange3.addEventListener('click', () => showSelected (sortRequiredRange3(), checkboxRequiredRange3));
 
+    // Обработчик события для установления курсов в алфавитном порядке
+
     sortByLeters.addEventListener('click', () => {
         const courseItem = document.querySelectorAll('.course__item');
         courseItem.forEach(item => item.remove());
-        currentValue = courses.sort(function(a, b) {
+        currentValue = currentValue.sort(function(a, b) {
             const nameA = a.name.toUpperCase(); // ignore upper and lowercase
             const nameB = b.name.toUpperCase(); // ignore upper and lowercase
             if (nameA < nameB) {
@@ -187,35 +193,20 @@
         });
     });
 
+
+    // Сортировка массива по возрастанию цены
+
     sortBySalary.addEventListener('click', () => {
         const courseItem = document.querySelectorAll('.course__item');
         courseItem.forEach(item => item.remove());
         function compareNumbers(a, b) {
-            return a.prices[1] - b.prices[0];
+            return a.prices[0] - b.prices[0];
           }
-    
-       
-        currentValue = courses.sort(compareNumbers);
+        currentValue = currentValue.sort(compareNumbers);
         currentValue.forEach(item => {
             new Courses(item.name, item.prices, '.course .container table').render();
         });
     });
-
-
-
-    // function compareNumbers(a, b) {
-    //     return a.prices[0] + b.prices[0];
-    //   }
-
-
-  
-
-    
-
-   
-    //   const newArr = courses.map.set('null', 0);
-    //   console.log(newArr);
-
 
 
   
