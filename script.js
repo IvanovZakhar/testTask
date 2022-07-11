@@ -82,7 +82,7 @@
              this.classes.forEach(className => element.classList.add(className));
         }
 
-        // Добавляем Элементы, с помощью инкрементов проверяем на наличие 0 и заменяем его на пустую строку
+        // Добавляем Элементы, с помощью инкрементов и проверяем на наличие 0 и заменяем его на пустую строку
        
         element.innerHTML = `
                     <td class="course-name">
@@ -170,7 +170,7 @@
     checkboxRequiredRange2.addEventListener('click', () => showSelected (sortRequiredRange2(), checkboxRequiredRange2));
     checkboxRequiredRange3.addEventListener('click', () => showSelected (sortRequiredRange3(), checkboxRequiredRange3));
 
-    // Обработчик события для установления курсов в алфавитном порядке
+    // Обработчик события для установления курсов в алфавитном порядке (Я знаю, в задании этого не было, но читая об сортировке захотелось опробывать) 
 
     sortByLeters.addEventListener('click', () => {
         const courseItem = document.querySelectorAll('.course__item');
